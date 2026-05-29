@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import SkeletonCard from "../components/SkeletonCard/SkeletonCard";
@@ -219,13 +219,17 @@ function FilterContent({
 
 function ProductListingScreen() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { addItem } = useCart();
-  const { isWishlisted, toggleItem } = useWishlist();
+  const { isWishlisted, toggleItem, itemCount: wishlistCount } = useWishlist();
   const { showToast, openCart: openCartUI, openWishlist } = useUI();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortBy, setSortBy] = useState("newest");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(() => {
+    const cat = searchParams.get("category");
+    return cat ? [cat] : [];
+  });
   const [selectedPriceRange, setSelectedPriceRange] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -675,6 +679,7 @@ function ProductListingScreen() {
         </button>
         <button type="button" className={styles.mobileNavBtn} onClick={openWishlist}>
           <i className="fa-regular fa-heart" aria-hidden="true" />
+          {wishlistCount > 0 && <span className={styles.navDot} />}
           <span>Wishlist</span>
         </button>
         <button type="button" className={styles.mobileNavBtn} onClick={openCartUI}>

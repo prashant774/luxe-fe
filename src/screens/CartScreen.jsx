@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { useCart } from "../hooks/useCart";
 import { useUI } from "../hooks/useUI";
+import { useWishlist } from "../hooks/useWishlist";
 import styles from "../styles/CartScreen.module.css";
 
 const NAV_ITEMS = [
@@ -23,7 +24,8 @@ const FREE_SHIPPING_THRESHOLD = 500;
 function CartScreen() {
   const navigate = useNavigate();
   const { items, itemCount, subtotal, removeItem, updateQty } = useCart();
-  const { showToast } = useUI();
+  const { showToast, openWishlist } = useUI();
+  const { itemCount: wishlistCount } = useWishlist();
 
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
   const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -203,8 +205,9 @@ function CartScreen() {
           <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />
           <span>Catalog</span>
         </button>
-        <button type="button" className={styles.mobileNavBtn} onClick={() => navigate("/wishlist")}>
+        <button type="button" className={styles.mobileNavBtn} onClick={openWishlist}>
           <i className="fa-regular fa-heart" aria-hidden="true" />
+          {wishlistCount > 0 && <span className={styles.navDot} />}
           <span>Wishlist</span>
         </button>
         <button type="button" className={`${styles.mobileNavBtn} ${styles.mobileNavBtnActive}`}>

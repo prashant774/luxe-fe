@@ -59,9 +59,9 @@ function StarRating({ rating }) {
 function ProductDetailScreen() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { addItem, openCart } = useCart();
-  const { isWishlisted, toggleItem, trackView, recentlyViewed } = useWishlist();
-  const { showToast, openCart: openCartUI } = useUI();
+  const { addItem } = useCart();
+  const { isWishlisted, toggleItem, trackView, recentlyViewed, itemCount: wishlistCount } = useWishlist();
+  const { showToast, openCart: openCartUI, openWishlist } = useUI();
 
   const product = productIndex[productId];
 
@@ -97,9 +97,10 @@ function ProductDetailScreen() {
 
   const handleWishlistToggle = () => {
     if (!product) return;
+    const wasWishlisted = isWishlisted(product.id);
     toggleItem(product.id);
     showToast(
-      isWishlisted(product.id)
+      wasWishlisted
         ? `${product.title} removed from wishlist.`
         : `${product.title} added to your wishlist.`,
       "success"
@@ -489,8 +490,9 @@ function ProductDetailScreen() {
           <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />
           <span>Catalog</span>
         </button>
-        <button type="button" className={styles.mobileNavBtn} onClick={handleWishlistToggle}>
-          <i className={wishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart"} aria-hidden="true" />
+        <button type="button" className={styles.mobileNavBtn} onClick={openWishlist}>
+          <i className="fa-regular fa-heart" aria-hidden="true" />
+          {wishlistCount > 0 && <span className={styles.navDot} />}
           <span>Wishlist</span>
         </button>
         <button type="button" className={styles.mobileNavBtn} onClick={openCartUI}>

@@ -29,12 +29,12 @@ const CATEGORIES = [
 
 function HomeScreen() {
   const navigate = useNavigate();
-  const { isWishlisted, toggleItem } = useWishlist();
+  const { isWishlisted, toggleItem, itemCount: wishlistCount } = useWishlist();
   const { showToast, openWishlist, openCart } = useUI();
 
   const featuredProducts = useMemo(
     () => products.filter((p) => p.featured).slice(0, 3),
-    [],
+    [products],
   );
 
   const toggleWishlist = (product, e) => {
@@ -94,7 +94,7 @@ function HomeScreen() {
         <div className={styles.categoryStripInner}>
           <div className={styles.categoryGrid}>
             {CATEGORIES.map((cat) => (
-              <div key={cat.id} className={styles.categoryItem} onClick={() => navigate('/products')} role="button" tabIndex={0}>
+              <div key={cat.id} className={styles.categoryItem} onClick={() => navigate(`/products?category=${encodeURIComponent(cat.label)}`)} role="button" tabIndex={0}>
                 <div className={styles.categoryIconCircle}>
                   <i className={`${cat.icon} ${styles.categoryItemIcon}`} aria-hidden="true" />
                 </div>
@@ -214,6 +214,7 @@ function HomeScreen() {
         </button>
         <button type="button" className={styles.mobileNavBtn} onClick={openWishlist}>
           <i className="fa-regular fa-heart" aria-hidden="true" />
+          {wishlistCount > 0 && <span className={styles.navDot} />}
           <span>Wishlist</span>
         </button>
         <button type="button" className={styles.mobileNavBtn} onClick={openCart}>

@@ -782,6 +782,20 @@
   letter-spacing: 0.08em;
 }
 
+.mobileNavBtn {
+  position: relative;
+}
+
+.navDot {
+  position: absolute;
+  top: 0;
+  right: 0.25rem;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: #0066cc;
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (min-width: 768px) {

@@ -15,11 +15,14 @@ function SearchModal() {
   const { searchOpen, closeSearch } = useUI();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const inputRef = useRef(null);
+  const debounceRef = useRef(null);
 
   useEffect(() => {
     if (searchOpen) {
       setQuery("");
+      setDebouncedQuery("");
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [searchOpen]);
@@ -32,11 +35,18 @@ function SearchModal() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [searchOpen, closeSearch]);
 
-  const suggestions = query.trim().length > 1
+  const handleQueryChange = (e) => {
+    const val = e.target.value;
+    setQuery(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => setDebouncedQuery(val), 200);
+  };
+
+  const suggestions = debouncedQuery.trim().length > 1
     ? products
         .filter((p) =>
-          p.title.toLowerCase().includes(query.toLowerCase()) ||
-          p.category.toLowerCase().includes(query.toLowerCase())
+          p.title.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+          p.category.toLowerCase().includes(debouncedQuery.toLowerCase())
         )
         .slice(0, 3)
     : [];
@@ -83,7 +93,7 @@ function SearchModal() {
             className={styles.searchInput}
             placeholder="Search seasonal collections…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleQueryChange}
             aria-label="Search products"
           />
           <button
@@ -97,7 +107,7 @@ function SearchModal() {
         </form>
 
         {/* Trending searches */}
-        {query.trim().length === 0 && (
+        {debouncedQuery.trim().length === 0 && (
           <div className={styles.section}>
             <p className={styles.sectionLabel}>Trending Searches</p>
             <div className={styles.pills}>
@@ -116,7 +126,7 @@ function SearchModal() {
         )}
 
         {/* Live suggestions */}
-        {query.trim().length > 1 && (
+        {debouncedQuery.trim().length > 1 && (
           <div className={styles.section}>
             <div className={styles.suggestionsHeader}>
               <p className={styles.sectionLabel}>Matched Suggestions</p>
@@ -132,7 +142,7 @@ function SearchModal() {
             </div>
             {suggestions.length === 0 ? (
               <p className={styles.noResults}>
-                No results for "{query}" — try a different term.
+                No results for "{debouncedQuery}" — try a different term.
               </p>
             ) : (
               <div className={styles.suggestions}>

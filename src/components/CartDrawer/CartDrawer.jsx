@@ -6,7 +6,7 @@ import styles from "./CartDrawer.module.css";
 const FREE_SHIPPING_THRESHOLD = 500;
 
 function CartDrawer() {
-  const { items, itemCount, subtotal, removeItem, updateQty } = useCart();
+  const { items, subtotal, removeItem, updateQty } = useCart();
   const { cartOpen, closeCart } = useUI();
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ function CartDrawer() {
         <div className={styles.header}>
           <h3 className={styles.title}>
             Your Editorial Bag
-            <span className={styles.count}> ({itemCount})</span>
+            <span className={styles.count}> ({items.length})</span>
           </h3>
           <button
             type="button"
