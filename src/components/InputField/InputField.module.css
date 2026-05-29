@@ -1,0 +1,32 @@
+.field {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+}
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  color: #666666;
+}
+.input {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.85rem 0.95rem;
+  font: inherit;
+  color: #111111;
+}
+.input:focus {
+  outline: none;
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.12);
+}
+.error {
+  border-color: #bf6c74;
+}
+.errorText {
+  color: #bf6c74;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,217 @@
+/* ── Backdrop ── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.backdropVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Modal ── */
+.modal {
+  position: fixed;
+  top: 6rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-1rem);
+  width: calc(100% - 2rem);
+  max-width: 42rem;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.modalVisible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Search row ── */
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.searchIcon {
+  color: #666666;
+  font-size: 0.9375rem;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: "Inter", sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 300;
+  color: #111111;
+  background: transparent;
+}
+
+.searchInput::placeholder {
+  color: #aaaaaa;
+}
+
+.closeBtn {
+  border: none;
+  background: transparent;
+  color: #666666;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 150ms ease;
+}
+
+.closeBtn:hover {
+  color: #111111;
+}
+
+/* ── Sections ── */
+.section {
+  padding: 1.25rem 1.5rem;
+}
+
+.sectionLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666666;
+  margin-bottom: 0.875rem;
+}
+
+/* ── Trending pills ── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pill {
+  background: #faf8f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 999px;
+  padding: 0.4375rem 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #111111;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.pill:hover {
+  border-color: #111111;
+  background: #ffffff;
+}
+
+/* ── Suggestions ── */
+.suggestionsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.875rem;
+}
+
+.viewAll {
+  border: none;
+  background: transparent;
+  color: #0066cc;
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  transition: opacity 150ms ease;
+}
+
+.viewAll:hover {
+  opacity: 0.7;
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.suggestion {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  text-align: left;
+  width: 100%;
+  transition: background 150ms ease;
+}
+
+.suggestion:hover {
+  background: #faf8f5;
+}
+
+.suggestionThumb {
+  width: 3rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+  background: #f3f3f3;
+}
+
+.suggestionInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.suggestionTitle {
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestionPrice {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #666666;
+  margin-top: 0.125rem;
+}
+
+.noResults {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: #999999;
+}

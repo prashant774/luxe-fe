@@ -1,0 +1,337 @@
+.page {
+  min-height: 100vh;
+  background: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8rem;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumbWrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.5rem 1rem 0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumbLink {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #666666;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.breadcrumbLink:hover {
+  color: #111111;
+}
+
+.breadcrumbSep {
+  font-size: 0.75rem;
+  color: #cccccc;
+}
+
+.breadcrumbCurrent {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #111111;
+}
+
+/* ── Page header ── */
+.pageHeader {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 2rem 1rem 0;
+  text-align: center;
+}
+
+.eyebrow {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0066cc;
+  margin-bottom: 0.5rem;
+}
+
+.pageTitle {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 0.5rem;
+}
+
+.pageCount {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: #666666;
+}
+
+/* ── Wrap ── */
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 2rem 1rem 3rem;
+  flex: 1;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem 1.5rem;
+}
+
+/* ── Card ── */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: #f3f3f3;
+  cursor: pointer;
+}
+
+.imagePrimary,
+.imageSecondary {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 500ms ease;
+}
+
+.imageSecondary {
+  opacity: 0;
+}
+
+.imageWrap:hover .imagePrimary {
+  opacity: 0;
+}
+
+.imageWrap:hover .imageSecondary {
+  opacity: 1;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  font-size: 0.875rem;
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.removeBtn:hover {
+  transform: scale(1.1);
+  background: #ffffff;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cardInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #111111;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardCategory {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.125rem;
+}
+
+.cardPrice {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111111;
+  flex-shrink: 0;
+}
+
+.moveBtn {
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 0.5rem 0.875rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0.125rem;
+  width: 100%;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.moveBtn:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* ── Empty state ── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  gap: 1rem;
+}
+
+.emptyState > i {
+  font-size: 3rem;
+  color: #cccccc;
+}
+
+.emptyTitle {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111111;
+}
+
+.emptyDesc {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: #666666;
+  max-width: 28rem;
+  line-height: 1.6;
+}
+
+.browseBtn {
+  margin-top: 0.5rem;
+  background: #111111;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem 2rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: background 200ms ease;
+}
+
+.browseBtn:hover {
+  background: #333333;
+}
+
+/* ── Mobile bottom nav ── */
+.mobileBottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid #e5e5e5;
+  padding: 0.625rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.mobileNavBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666666;
+  font-family: "Inter", sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  transition: color 150ms ease;
+}
+
+.mobileNavBtn > i {
+  font-size: 1rem;
+}
+
+.mobileNavBtn:hover {
+  color: #111111;
+}
+
+.mobileNavBtnActive {
+  color: #111111;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mobileBottomNav {
+    display: none;
+  }
+
+  .page {
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,28 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 999px;
+  padding: 0.2rem;
+  background: #fff;
+}
+.button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: #111111;
+  font-size: 1rem;
+}
+.button:hover {
+  background: #f4efe9;
+}
+.value {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 700;
+  color: #111111;
+}
