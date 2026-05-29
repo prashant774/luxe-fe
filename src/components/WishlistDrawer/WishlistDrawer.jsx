@@ -14,8 +14,8 @@ function WishlistDrawer() {
   const wishlistProducts = ids.map((id) => productIndex[id]).filter(Boolean);
 
   const handleMoveToBag = (product) => {
-    const size = product.sizes?.[0] ?? "One Size";
-    const color = product.colors?.[0] ?? "";
+    const size = product.sizes?.[1] ?? product.sizes?.[0] ?? "One Size";
+    const color = product.colors?.[0]?.name ?? "";
     addItem(product, size, color);
     removeItem(product.id);
     closeWishlist();
@@ -103,7 +103,7 @@ function WishlistDrawer() {
                     className={styles.moveBtn}
                     onClick={() => handleMoveToBag(product)}
                   >
-                    MOVE TO BAG ({product.sizes?.[0] ?? "One Size"})
+                    MOVE TO BAG ({product.sizes?.[1] ?? product.sizes?.[0] ?? "One Size"})
                   </button>
                 </div>
               </div>

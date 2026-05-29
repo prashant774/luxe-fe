@@ -54,13 +54,13 @@ function SearchModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate("/products");
+      navigate(`/products?q=${encodeURIComponent(query.trim())}`);
       closeSearch();
     }
   };
 
   const handleTrending = (term) => {
-    navigate("/products");
+    navigate(`/products?q=${encodeURIComponent(term)}`);
     closeSearch();
   };
 

@@ -37,11 +37,12 @@ function SizingContent({ onClose, onApply, sizes }) {
       <div className={styles.body}>
         {/* Height */}
         <div className={styles.sliderGroup}>
-          <div className={styles.sliderLabel}>
+          <label htmlFor="sizing-height" className={styles.sliderLabel}>
             <span>Height</span>
             <span className={styles.sliderVal}>{height} cm</span>
-          </div>
+          </label>
           <input
+            id="sizing-height"
             type="range"
             min={150}
             max={210}
@@ -49,6 +50,10 @@ function SizingContent({ onClose, onApply, sizes }) {
             value={height}
             onChange={(e) => setHeight(Number(e.target.value))}
             className={styles.slider}
+            aria-valuemin={150}
+            aria-valuemax={210}
+            aria-valuenow={height}
+            aria-valuetext={`${height} cm`}
           />
           <div className={styles.sliderRange}>
             <span>150 cm</span>
@@ -58,11 +63,12 @@ function SizingContent({ onClose, onApply, sizes }) {
 
         {/* Weight */}
         <div className={styles.sliderGroup}>
-          <div className={styles.sliderLabel}>
+          <label htmlFor="sizing-weight" className={styles.sliderLabel}>
             <span>Weight</span>
             <span className={styles.sliderVal}>{weight} kg</span>
-          </div>
+          </label>
           <input
+            id="sizing-weight"
             type="range"
             min={45}
             max={120}
@@ -70,6 +76,10 @@ function SizingContent({ onClose, onApply, sizes }) {
             value={weight}
             onChange={(e) => setWeight(Number(e.target.value))}
             className={styles.slider}
+            aria-valuemin={45}
+            aria-valuemax={120}
+            aria-valuenow={weight}
+            aria-valuetext={`${weight} kg`}
           />
           <div className={styles.sliderRange}>
             <span>45 kg</span>

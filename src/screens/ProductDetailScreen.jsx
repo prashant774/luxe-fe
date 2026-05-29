@@ -22,22 +22,6 @@ const FOOTER_LINKS = [
   { label: "Structured Blazers", href: "#" },
 ];
 
-const COLOR_MAP = {
-  Ash: "#B2BEB5",       Black: "#1A1A1A",    Blush: "#DE5D83",
-  Blue: "#3B82F6",      Bronze: "#CD7F32",   Camel: "#C19A6B",
-  Carbon: "#2D2D2D",    Charcoal: "#36454F", Chocolate: "#7B3F00",
-  Clay: "#B66A50",      Coal: "#3D3C3A",     Copper: "#B87333",
-  Cream: "#FFF8E7",     Gold: "#D4AF37",     Graphite: "#383838",
-  Indigo: "#3730A3",    Ink: "#1E2235",      Ivory: "#FFFFF0",
-  Khaki: "#C3B091",     Midnight: "#1A1A3E", Mink: "#9E7B7B",
-  Mist: "#C4D4DA",      Moss: "#8A9A5B",     Natural: "#F5DEB3",
-  Navy: "#001F5B",      Obsidian: "#2D2D2D", Olive: "#6B7645",
-  Onyx: "#353839",      Pearl: "#EAE0C8",    Pine: "#01796F",
-  Plum: "#8E4585",      Sand: "#C4A882",     Sage: "#8B9467",
-  Silver: "#C0C0C0",    Steel: "#708090",    Stone: "#928E85",
-  Tan: "#D2B48C",       Taupe: "#8B7D6B",    Washed: "#A9B7C6",
-  White: "#F5F5F5",
-};
 
 function StarRating({ rating }) {
   const full = Math.floor(rating);
@@ -79,16 +63,15 @@ function ProductDetailScreen() {
   // Sizing assistant state
   const [sizeAssistantOpen, setSizeAssistantOpen] = useState(false);
 
-  // Track recently viewed
+  // Track recently viewed and reset UI state when product changes
   useEffect(() => {
     if (productId) trackView(productId);
-    // reset image index when product changes
     setActiveImageIdx(0);
     setSelectedSize(product?.sizes?.[0] ?? null);
     setSelectedColor(product?.colors?.[0] ?? null);
     setAddedToBag(false);
     setSizeError(false);
-  }, [productId]);
+  }, [productId, trackView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const wishlisted = product ? isWishlisted(product.id) : false;
 
@@ -149,7 +132,7 @@ function ProductDetailScreen() {
       setTimeout(() => setSizeError(false), 2000);
       return;
     }
-    addItem(product, selectedSize, selectedColor);
+    addItem(product, selectedSize, selectedColor?.name ?? "");
     showToast(`${product.title} (${selectedSize}) added to your bag.`, "success");
     setAddedToBag(true);
     setTimeout(() => setAddedToBag(false), 2500);
@@ -293,19 +276,19 @@ function ProductDetailScreen() {
               <span className={styles.selectorLabel}>
                 Colour
                 {selectedColor && (
-                  <span className={styles.selectorValue}> — {selectedColor}</span>
+                  <span className={styles.selectorValue}> — {selectedColor.name}</span>
                 )}
               </span>
               <div className={styles.colorSwatches}>
                 {product.colors.map((color) => (
                   <button
-                    key={color}
+                    key={color.name}
                     type="button"
-                    className={`${styles.colorSwatch} ${selectedColor === color ? styles.colorSwatchActive : ""}`}
-                    style={{ "--swatch": COLOR_MAP[color] ?? "#CCCCCC" }}
+                    className={`${styles.colorSwatch} ${selectedColor?.name === color.name ? styles.colorSwatchActive : ""}`}
+                    style={{ "--swatch": color.hex }}
                     onClick={() => setSelectedColor(color)}
-                    aria-label={color}
-                    title={color}
+                    aria-label={color.name}
+                    title={color.name}
                   />
                 ))}
               </div>

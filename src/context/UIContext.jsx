@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useRef } from "react";
 
 export const UIContext = createContext(null);
 
@@ -7,6 +7,7 @@ export function UIProvider({ children }) {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [toast, setToast] = useState({ visible: false, message: "", type: "success" });
+  const toastTimerRef = useRef(null);
 
   const openCart = useCallback(() => setCartOpen(true), []);
   const closeCart = useCallback(() => setCartOpen(false), []);
@@ -16,8 +17,9 @@ export function UIProvider({ children }) {
   const closeSearch = useCallback(() => setSearchOpen(false), []);
 
   const showToast = useCallback((message, type = "success") => {
+    clearTimeout(toastTimerRef.current);
     setToast({ visible: true, message, type });
-    setTimeout(() => setToast((t) => ({ ...t, visible: false })), 3000);
+    toastTimerRef.current = setTimeout(() => setToast((t) => ({ ...t, visible: false })), 3000);
   }, []);
 
   return (

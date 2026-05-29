@@ -23,12 +23,11 @@ const FOOTER_LINKS = [
 ];
 
 const ALL_CATEGORIES = [...new Set(products.map((p) => p.category))].sort();
-const ALL_SIZES = [
-  "XS", "S", "M", "L", "XL",
-  "US 7", "US 8", "US 9", "US 10", "US 11",
-  "One Size",
-];
-const ALL_COLORS = [...new Set(products.flatMap((p) => p.colors))].sort();
+const ALL_SIZES = ["XS", "S", "M", "L", "XL", "28", "30", "32", "34", "36"];
+// Build unique { name, hex } color objects keyed by name
+const _colorMap = new Map();
+products.forEach((p) => p.colors.forEach((c) => { if (!_colorMap.has(c.name)) _colorMap.set(c.name, c); }));
+const ALL_COLORS = [..._colorMap.values()].sort((a, b) => a.name.localeCompare(b.name));
 
 const PRICE_RANGES = [
   { id: "under75",  label: "Under $75",     min: 0,   max: 75       },
@@ -50,22 +49,6 @@ const RATING_OPTIONS = [
   { value: 3.5, label: "3.5 & Up" },
 ];
 
-const COLOR_MAP = {
-  Ash: "#B2BEB5",       Black: "#1A1A1A",    Blush: "#DE5D83",
-  Blue: "#3B82F6",      Bronze: "#CD7F32",   Camel: "#C19A6B",
-  Carbon: "#2D2D2D",    Charcoal: "#36454F", Chocolate: "#7B3F00",
-  Clay: "#B66A50",      Coal: "#3D3C3A",     Copper: "#B87333",
-  Cream: "#FFF8E7",     Gold: "#D4AF37",     Graphite: "#383838",
-  Indigo: "#3730A3",    Ink: "#1E2235",      Ivory: "#FFFFF0",
-  Khaki: "#C3B091",     Midnight: "#1A1A3E", Mink: "#9E7B7B",
-  Mist: "#C4D4DA",      Moss: "#8A9A5B",     Natural: "#F5DEB3",
-  Navy: "#001F5B",      Obsidian: "#2D2D2D", Olive: "#6B7645",
-  Onyx: "#353839",      Pearl: "#EAE0C8",    Pine: "#01796F",
-  Plum: "#8E4585",      Sand: "#C4A882",     Sage: "#8B9467",
-  Silver: "#C0C0C0",    Steel: "#708090",    Stone: "#928E85",
-  Tan: "#D2B48C",       Taupe: "#8B7D6B",    Washed: "#A9B7C6",
-  White: "#F5F5F5",
-};
 
 const ITEMS_PER_PAGE = 6;
 
@@ -169,13 +152,13 @@ function FilterContent({
         <div className={styles.filterColorGrid}>
           {ALL_COLORS.map((color) => (
             <button
-              key={color}
+              key={color.name}
               type="button"
-              className={`${styles.filterColorBtn} ${selectedColors.includes(color) ? styles.filterColorBtnActive : ""}`}
-              onClick={() => toggleColor(color)}
-              title={color}
-              aria-label={color}
-              style={{ "--swatch": COLOR_MAP[color] || "#CCCCCC" }}
+              className={`${styles.filterColorBtn} ${selectedColors.includes(color.name) ? styles.filterColorBtnActive : ""}`}
+              onClick={() => toggleColor(color.name)}
+              title={color.name}
+              aria-label={color.name}
+              style={{ "--swatch": color.hex }}
             />
           ))}
         </div>
@@ -223,8 +206,8 @@ function ProductListingScreen() {
   const { addItem } = useCart();
   const { isWishlisted, toggleItem, itemCount: wishlistCount } = useWishlist();
   const { showToast, openCart: openCartUI, openWishlist } = useUI();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(() => searchParams.get("q") ?? "");
   const [sortBy, setSortBy] = useState("newest");
   const [selectedCategories, setSelectedCategories] = useState(() => {
     const cat = searchParams.get("category");
@@ -344,7 +327,7 @@ function ProductListingScreen() {
 
     if (selectedColors.length > 0) {
       result = result.filter((p) =>
-        p.colors.some((c) => selectedColors.includes(c))
+        p.colors.some((c) => selectedColors.includes(c.name))
       );
     }
 
@@ -616,7 +599,7 @@ function ProductListingScreen() {
                                 className={styles.quickAddSizeBtn}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  addItem(product, sz, product.colors?.[0] ?? "");
+                                  addItem(product, sz, product.colors?.[0]?.name ?? "");
                                   showToast(`${product.title} (${sz}) added to your bag.`, "success");
                                   openCartUI();
                                 }}
