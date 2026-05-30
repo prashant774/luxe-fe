@@ -47,7 +47,7 @@ export const products = [
     shortDescription: "Virgin wool and cashmere, structured silhouette.",
     images: [
       "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1548624149-f9b1859aa7d0?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Camel Tan", hex: "#C19A6B" },
@@ -77,7 +77,7 @@ export const products = [
     shortDescription: "Breathable waterproof technical membrane.",
     images: [
       "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1604645511996-3e1574b0ed91?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Storm Grey", hex: "#4F5D65" },
@@ -137,8 +137,8 @@ export const products = [
       "Responsibly sourced down fill meets clean quilted panelling in this heritage bomber silhouette. Rib-knit cuffs and hem seal in warmth while maintaining a contemporary proportioned fit. Available in a restrained editorial palette.",
     shortDescription: "Responsibly sourced down, quilted heritage bomber.",
     images: [
-      "https://images.unsplash.com/photo-1548711996-880e0e040e1e?q=80&w=900&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1548883354-94bcfe321cbb?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Burnt Umber", hex: "#7B3F1A" },
@@ -167,8 +167,8 @@ export const products = [
       "A single-breasted overcoat in the finest Italian wool-cashmere blend. The signature camel colourway has been a LUXE hallmark — cut to a clean, slightly roomy silhouette that layers effortlessly over tailoring. Fully lined in Bemberg cupro.",
     shortDescription: "Italian wool-cashmere, signature camel colourway.",
     images: [
-      "https://images.unsplash.com/photo-1594938298603-c8148c4b4dfa?q=80&w=900&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1614252369475-531eba835eb1?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Camel Tan", hex: "#C19A6B" },
@@ -508,8 +508,8 @@ export const products = [
       "A clean slim-cut blazer in virgin Italian wool with a Bemberg cupro lining. Single-breasted with notch lapels and a clean chest welt pocket. Versatile enough to dress down with chinos or elevate a trouser combination.",
     shortDescription: "Virgin Italian wool, slim single-breasted cut.",
     images: [
-      "https://images.unsplash.com/photo-1592878849122-facb97ed2c9e?q=80&w=900&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Slate Grey", hex: "#6B7280" },
@@ -539,7 +539,7 @@ export const products = [
     shortDescription: "100% Belgian linen, relaxed summer two-piece.",
     images: [
       "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1592878849122-facb97ed2c9e?q=80&w=900&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1608228088998-57828365d486?q=80&w=900&auto=format&fit=crop",
     ],
     colors: [
       { name: "Warm Ivory", hex: "#F5EFE0" },

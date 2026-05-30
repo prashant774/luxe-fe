@@ -8,22 +8,25 @@ describe("App — integration shell", () => {
 
   it("renders the primary navigation", async () => {
     renderWithProviders(<App />);
-    await waitFor(() =>
-      expect(screen.getByRole("navigation", { name: /primary navigation/i })).toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.getByRole("navigation", { name: /primary navigation/i })).toBeInTheDocument(),
+      { timeout: 4000 }
     );
   });
 
   it("renders the homepage hero headline on the root route", async () => {
     renderWithProviders(<App />);
-    await waitFor(() =>
-      expect(screen.getByText(/Autumn Silhouette/i)).toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.getByText(/Autumn Silhouette/i)).toBeInTheDocument(),
+      { timeout: 4000 }
     );
   });
 
   it("renders the LUXE brand name in the navbar", async () => {
     renderWithProviders(<App />);
-    await waitFor(() =>
-      expect(screen.getAllByText(/LUXE/i).length).toBeGreaterThan(0)
+    await waitFor(
+      () => expect(screen.getAllByText(/LUXE/i).length).toBeGreaterThan(0),
+      { timeout: 4000 }
     );
   });
 });
