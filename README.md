@@ -24,6 +24,26 @@ A complete end-to-end e-commerce experience across 6 screens with full purchase 
 
 ---
 
+## Screenshots
+
+**Homepage — Hero & Editorial Releases**
+![Homepage Hero](design/Screenshot%20(27).png)
+![Featured Products Grid](design/Screenshot%20(28).png)
+
+**Product Listing — Category Filter & Sidebar**
+![Product Listing Page](design/Screenshot%20(36).png)
+
+**Product Detail — Gallery, Color, Size & Ratings**
+![Product Detail Page](design/Screenshot%20(40).png)
+
+**Cart — Editorial Bag & Order Summary**
+![Cart Screen](design/Screenshot%20(31).png)
+
+**Checkout — 3-Section Form & Line Items**
+![Checkout Screen](design/Screenshot%20(34).png)
+
+---
+
 ## Live Stack
 
 | Layer | Technology |
