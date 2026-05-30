@@ -1,9 +1,8 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import HomeScreen from "../../screens/HomeScreen";
-import { renderWithProviders } from "../../test/renderWithProviders";
+import HomeScreen from "../../src/screens/HomeScreen";
+import { renderWithProviders } from "../helpers/renderWithProviders";
 
-// HomeScreen is imported directly (not lazy), so all renders are synchronous.
 describe("HomeScreen", () => {
   beforeEach(() => localStorage.clear());
 
@@ -19,10 +18,9 @@ describe("HomeScreen", () => {
 
   test("renders all 4 category labels in the strip", () => {
     renderWithProviders(<HomeScreen />);
-    // Text appears in navbar, strip, and product cards — use getAllByText
     expect(screen.getAllByText("Outerwear").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Knitwear").length).toBeGreaterThan(0);
-    expect(screen.getByText("Tailoring")).toBeInTheDocument(); // only in strip
+    expect(screen.getByText("Tailoring")).toBeInTheDocument();
     expect(screen.getAllByText("Trousers").length).toBeGreaterThan(0);
   });
 
@@ -41,7 +39,6 @@ describe("HomeScreen", () => {
     const addBtns = screen.getAllByLabelText(/Add to wishlist/i);
     expect(addBtns.length).toBe(3);
     await userEvent.click(addBtns[0]);
-    // After toggle, that button should now say "Remove from wishlist"
     expect(screen.getAllByLabelText(/Remove from wishlist/i)).toHaveLength(1);
   });
 });

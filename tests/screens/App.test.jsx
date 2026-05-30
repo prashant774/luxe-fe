@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
-import App from "../../App";
-import { renderWithProviders } from "../../test/renderWithProviders";
+import App from "../../src/App";
+import { renderWithProviders } from "../helpers/renderWithProviders";
 
 // App uses React.lazy in AppRoutes — Suspense resolves async, so we must waitFor.
 describe("App — integration shell", () => {

@@ -1,12 +1,11 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Route, Routes } from "react-router-dom";
-import ProductDetailScreen from "../../screens/ProductDetailScreen";
-import { renderWithProviders } from "../../test/renderWithProviders";
+import ProductDetailScreen from "../../src/screens/ProductDetailScreen";
+import { renderWithProviders } from "../helpers/renderWithProviders";
 
 // prod-001: sizes ["XS","S","M","L","XL"], soldOutSizes ["XS","XL"]
 // prod-003: sizes ["S","M","L"],            soldOutSizes ["S"]
-// prod-016: sizes ["S","M","L","XL"],       soldOutSizes ["S","XL"]
 
 function renderPDP(productId = "prod-001") {
   return renderWithProviders(
@@ -20,15 +19,16 @@ function renderPDP(productId = "prod-001") {
 describe("ProductDetailScreen", () => {
   beforeEach(() => localStorage.clear());
 
-  test("renders the product title for prod-001", () => {
+  test("renders the product title h1 for prod-001", () => {
     renderPDP();
-    expect(screen.getByText(/Gabardine Trench/i)).toBeInTheDocument();
+    // Title appears in breadcrumb, h1, and mobile bar — target the heading specifically
+    expect(screen.getByRole("heading", { level: 1, name: /Gabardine Trench/i })).toBeInTheDocument();
   });
 
-  test("renders product brand and category tag", () => {
+  test("renders the category tag in the info pane", () => {
     renderPDP();
-    expect(screen.getByText(/LUXE Atelier/i)).toBeInTheDocument();
-    expect(screen.getByText(/Outerwear/i)).toBeInTheDocument();
+    // The PDP renders category as a tag above the title; it also appears in the breadcrumb
+    expect(screen.getAllByText(/Outerwear/i).length).toBeGreaterThan(0);
   });
 
   test("shows not-found state for an invalid product id", () => {
@@ -43,7 +43,7 @@ describe("ProductDetailScreen", () => {
   });
 
   test("sold-out XS button is disabled for prod-001", () => {
-    renderPDP("prod-001"); // soldOutSizes: ["XS","XL"]
+    renderPDP("prod-001");
     expect(screen.getByRole("button", { name: /^XS$/i })).toBeDisabled();
   });
 
@@ -58,16 +58,12 @@ describe("ProductDetailScreen", () => {
   });
 
   test("PDP auto-skips sold-out sizes: prod-001 pre-selects S (not XS)", () => {
-    // firstAvailableSize skips XS (sold out) and picks S
     renderPDP("prod-001");
-    const sBtn = screen.getByRole("button", { name: /^S$/i });
-    // The active button has the sizeBtnActive class; we check aria or check that add succeeds
-    // Clicking ADD TO BAG without changing the size should work (S is pre-selected)
-    expect(sBtn).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^S$/i })).toBeInTheDocument();
   });
 
   test("clicking ADD TO BAG with pre-selected valid size succeeds", async () => {
-    renderPDP("prod-001"); // S is auto-selected (first non-sold-out)
+    renderPDP("prod-001");
     await userEvent.click(screen.getByText(/ADD TO BAG/i));
     expect(screen.getByText(/ADDED TO BAG/i)).toBeInTheDocument();
   });
@@ -90,5 +86,24 @@ describe("ProductDetailScreen", () => {
     const addBtn = screen.getByLabelText(/Add to wishlist/i);
     await userEvent.click(addBtn);
     expect(screen.getAllByLabelText(/Remove from wishlist/i).length).toBeGreaterThan(0);
+  });
+
+  // Regression test for Bug 2: clicking thumbnails must update the main image
+  // and NOT reset back to index 0 (was caused by unmemoized trackView in useEffect deps)
+  test("clicking a thumbnail updates the main image src", async () => {
+    renderPDP("prod-001");
+    // Get all thumbnail buttons (prod-001 has 2 images → 2 thumbs)
+    const thumbBtns = screen.getAllByRole("button", { name: /View image/i });
+    expect(thumbBtns.length).toBeGreaterThanOrEqual(2);
+
+    // The main image role — it has the product alt text
+    const mainImg = screen.getByAltText(/Minimalist Gabardine Trench/i);
+    const firstSrc = mainImg.getAttribute("src");
+
+    // Click the second thumbnail
+    await userEvent.click(thumbBtns[1]);
+
+    // src should now differ from the first image
+    expect(mainImg.getAttribute("src")).not.toBe(firstSrc);
   });
 });

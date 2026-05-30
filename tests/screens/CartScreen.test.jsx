@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
-import CartScreen from "../../screens/CartScreen";
-import { CartContext } from "../../context/CartContext";
-import { renderWithProviders } from "../../test/renderWithProviders";
+import CartScreen from "../../src/screens/CartScreen";
+import { CartContext } from "../../src/context/CartContext";
+import { renderWithProviders } from "../helpers/renderWithProviders";
 
 const MOCK_PRODUCT = {
   id: "p1",
@@ -13,7 +13,6 @@ const MOCK_PRODUCT = {
   images: ["/img.jpg"],
 };
 
-// Seeder sits inside CartProvider (via renderWithProviders) so it has access to CartContext.
 function CartTestPage() {
   const { addItem } = useContext(CartContext);
   return (
@@ -46,7 +45,6 @@ describe("CartScreen", () => {
     renderCart();
     await userEvent.click(screen.getByText("seed-item"));
     await userEvent.click(screen.getByLabelText(/increase quantity/i));
-    // Cart title: "Your Editorial Bag (2)"
     expect(screen.getByText("(2)")).toBeInTheDocument();
   });
 
@@ -63,17 +61,15 @@ describe("CartScreen", () => {
     expect(screen.getByText(/PROCEED TO SECURE CHECKOUT/i)).toBeInTheDocument();
   });
 
-  test("shipping bar shows free delivery unlocked at $500+", async () => {
+  test("shipping bar shows spend-more message at $345 (below $500 threshold)", async () => {
     renderCart();
     await userEvent.click(screen.getByText("seed-item"));
-    // $345 < $500, so we should see "spend X more" message
     expect(screen.getByText(/more to unlock/i)).toBeInTheDocument();
   });
 
   test("order summary shows correct subtotal", async () => {
     renderCart();
     await userEvent.click(screen.getByText("seed-item"));
-    // $345.00 appears in: item price, subtotal line, total row — use getAllByText
     expect(screen.getAllByText("$345.00").length).toBeGreaterThan(0);
   });
 });

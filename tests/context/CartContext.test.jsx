@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
-import { CartProvider, CartContext } from "../../context/CartContext";
+import { CartProvider, CartContext } from "../../src/context/CartContext";
 
 const P1 = { id: "p1", title: "Test Coat",  price: 200, images: ["/a.jpg"] };
 const P2 = { id: "p2", title: "Test Knit",  price: 150, images: ["/b.jpg"] };

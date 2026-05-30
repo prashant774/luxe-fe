@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
-import { WishlistProvider, WishlistContext } from "../../context/WishlistContext";
+import { WishlistProvider, WishlistContext } from "../../src/context/WishlistContext";
 
 function Harness() {
   const { ids, itemCount, isWishlisted, toggleItem, removeItem, recentlyViewed, trackView } =

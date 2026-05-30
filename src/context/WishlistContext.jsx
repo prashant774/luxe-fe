@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 
 const WISHLIST_KEY = "luxe_wishlist";
 const RECENT_KEY = "luxe_recent";
@@ -28,23 +28,21 @@ export function WishlistProvider({ children }) {
 
   const itemCount = ids.length;
 
-  function isWishlisted(id) {
-    return ids.includes(id);
-  }
+  const isWishlisted = useCallback((id) => ids.includes(id), [ids]);
 
-  function toggleItem(id) {
+  const toggleItem = useCallback((id) => {
     setIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
-  }
+  }, []);
 
-  function removeItem(id) {
+  const removeItem = useCallback((id) => {
     setIds((prev) => prev.filter((x) => x !== id));
-  }
+  }, []);
 
-  function trackView(id) {
+  const trackView = useCallback((id) => {
     setRecentlyViewed((prev) => [id, ...prev.filter((x) => x !== id)].slice(0, 5));
-  }
+  }, []);
 
   return (
     <WishlistContext.Provider value={{ ids, itemCount, isWishlisted, toggleItem, removeItem, recentlyViewed, trackView }}>

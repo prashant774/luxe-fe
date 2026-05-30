@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ProductListingScreen from "../../screens/ProductListingScreen";
-import { renderWithProviders } from "../../test/renderWithProviders";
+import ProductListingScreen from "../../src/screens/ProductListingScreen";
+import { renderWithProviders } from "../helpers/renderWithProviders";
 
 // PLP has a 1-second fake loading delay before showing products.
 // All tests that need loaded products must use waitFor with an adequate timeout.
@@ -15,10 +15,8 @@ function renderPLP(search = "") {
 describe("ProductListingScreen", () => {
   beforeEach(() => localStorage.clear());
 
-  test("shows skeleton loader elements during the initial 1-second load", () => {
+  test("shows skeleton loader placeholder during the initial 1-second load", () => {
     renderPLP();
-    // SkeletonCards are aria-hidden; FA icons in Navbar are also aria-hidden.
-    // We check for the "—" placeholder in the product count which shows while loading.
     expect(screen.getByText("—")).toBeInTheDocument();
   });
 
@@ -30,7 +28,7 @@ describe("ProductListingScreen", () => {
     );
   });
 
-  test("sort dropdown contains all 5 options including Featured Collection", async () => {
+  test("sort dropdown contains all 5 options including Featured Collection", () => {
     renderPLP();
     const select = screen.getByRole("combobox");
     const labels = Array.from(select.querySelectorAll("option")).map(o => o.textContent);
@@ -66,13 +64,28 @@ describe("ProductListingScreen", () => {
   test("Clear Filters button appears when filters are active", async () => {
     renderPLP();
     await waitFor(() => expect(screen.getByText(/\d+ pieces/i)).toBeInTheDocument(), { timeout: 2500 });
-    // Click the Outerwear category checkbox to activate a filter
     const checkboxes = screen.getAllByRole("checkbox");
     const outerwearCb = checkboxes.find(
       cb => cb.closest("label")?.textContent?.includes("Outerwear")
     );
     await userEvent.click(outerwearCb);
-    // "Clear All" appears in both desktop sidebar and mobile filter drawer
     expect(screen.getAllByText("Clear All").length).toBeGreaterThan(0);
+  });
+
+  // Regression test for Bug 1: ?category URL param must re-apply the filter
+  // when the URL changes while the component is already mounted (in-route navigation).
+  // This tests the useEffect that syncs searchParams → selectedCategories.
+  test("Knitwear filter is active when URL has ?category=Knitwear", async () => {
+    renderPLP("?category=Knitwear");
+    await waitFor(
+      () => {
+        const checkboxes = screen.getAllByRole("checkbox");
+        const knitwearCb = checkboxes.find(
+          cb => cb.closest("label")?.textContent?.includes("Knitwear")
+        );
+        expect(knitwearCb).toBeChecked();
+      },
+      { timeout: 2500 }
+    );
   });
 });

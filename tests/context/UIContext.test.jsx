@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
-import { UIProvider, UIContext } from "../../context/UIContext";
+import { UIProvider, UIContext } from "../../src/context/UIContext";
 
 function Harness() {
   const {

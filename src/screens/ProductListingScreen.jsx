@@ -212,6 +212,14 @@ function ProductListingScreen() {
 
   const searchTimerRef = useRef(null);
 
+  /* Sync category filter when the URL ?category param changes via in-app navigation
+     (e.g. clicking Navbar links while already on this route). The useState initializer
+     only runs on mount; this effect keeps the filter in sync for subsequent URL changes. */
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    setSelectedCategories(cat ? [cat] : []);
+  }, [searchParams]);
+
   /* Simulate initial load */
   useEffect(() => {
     const t = setTimeout(() => setIsLoading(false), 1000);
