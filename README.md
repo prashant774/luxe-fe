@@ -104,7 +104,7 @@ luxe-fe/
 
 ## How This Project Was Built — Phase by Phase
 
-The project was built in **11 structured phases**, each building on the previous. The HTML design reference (`design/design-reference.html`) served as the single source of truth throughout.
+The project was built in **11 structured phases**, each building on the previous.
 
 ---
 
