@@ -4,6 +4,26 @@ A fully functional luxury fashion storefront built with React 18 + Vite 5, desig
 
 ---
 
+## What I Built
+
+A complete end-to-end e-commerce experience across 6 screens with full purchase flow, persistent state, and 84 automated tests.
+
+**Screens:** Home → Product Listing → Product Detail → Cart → Wishlist → Checkout
+
+**Core flows:**
+- Browse 25 luxury products across 4 categories (Outerwear, Knitwear, Suits, Trousers)
+- Filter by category, size, price, color, rating — with URL-driven state so filtered links are shareable
+- Search with live suggestions and 200ms debounce
+- Product detail with image gallery, zoom lens, sold-out size handling, and sizing assistant modal
+- Add to cart with deduplication (same product + size + color increments qty, does not add duplicate row)
+- Wishlist with toggle, MOVE TO BAG action, and localStorage persistence across sessions
+- Checkout form with card number auto-formatting, expiry auto-formatting, order confirmation screen
+- Recently viewed (max 5, persisted), related products, skeleton loading states, toast notifications
+
+**Tests:** 84 passing across 10 suites — contexts, all 6 screens, edge cases (empty states, not-found, sold-out sizes, form validation, success flow)
+
+---
+
 ## Live Stack
 
 | Layer | Technology |
@@ -293,6 +313,26 @@ npm run build
 # Run all tests
 npm test
 ```
+
+---
+
+## What I Would Do Differently with More Time
+
+**TypeScript** — The product schema has 15+ fields and the Context API has several interacting shapes. TypeScript interfaces would have caught mismatched field names at compile time and made refactoring safer. I chose plain JS to move faster but would use TS from day one on a real project.
+
+**CSS design tokens** — Colors, spacing, and typography scale are hardcoded per module (e.g., `#0047AB` for cobalt repeated across 20+ files). Would extract a token layer — `--color-brand`, `--space-4`, `--radius-card` — in `global.css` so changes propagate everywhere and dark mode becomes feasible without a full rewrite.
+
+**Cypress E2E tests** — Current coverage is unit and integration (Testing Library + jsdom). Would add Cypress tests for the full golden path: browse → filter → PDP → add to cart → checkout → order confirmation. These catch routing, drawer open/close, and multi-screen state transitions that unit tests can't reach.
+
+**Per-field checkout validation** — The form uses HTML5 `required` only. Would add real-time validation with inline error messages: email format check, card number Luhn algorithm, expiry must be a future date, CVV length by card type. This is the most visible gap in the checkout UX.
+
+**React Error Boundaries** — Any unhandled runtime error currently crashes the entire app to a blank white screen. Would wrap each screen in an Error Boundary with a graceful fallback and a "reload" CTA so a single broken component doesn't kill the session.
+
+**Image lazy loading + srcSet** — Product images are fetched as full-resolution Unsplash URLs. Would add `loading="lazy"` on below-fold images and `srcSet` with width descriptors + WebP format transforms for LCP and bandwidth on mobile.
+
+**Next.js for SSR/SSG** — For a real fashion e-commerce site, SEO is critical. Product pages need to be server-rendered or statically generated so search engines index them. Would migrate to Next.js App Router with `generateStaticParams` for all 25 product PDPs.
+
+**Accessibility audit** — ARIA labels are on key interactive elements and keyboard focus styles are defined, but I haven't run a systematic `axe-core` audit. A real production pass would catch contrast failures, missing form field associations, and focus trap gaps in the drawers.
 
 ---
 
