@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { triggerFlyToCart } from "../utils/flyToCart";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -8,19 +9,7 @@ import { useWishlist } from "../hooks/useWishlist";
 import { useUI } from "../hooks/useUI";
 import styles from "../styles/ProductDetailScreen.module.css";
 import { productIndex } from "../utils/data";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "/products" },
-  { label: "Outerwear", href: "/products" },
-  { label: "Knitwear", href: "/products" },
-  { label: "Trousers", href: "/products" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "#" },
-  { label: "Inner Cashmere Knitwear", href: "#" },
-  { label: "Structured Blazers", href: "#" },
-];
+import { NAV_ITEMS, FOOTER_LINKS } from "../utils/constants";
 
 
 function StarRating({ rating }) {
@@ -40,6 +29,12 @@ function StarRating({ rating }) {
   );
 }
 
+function firstAvailableSize(product) {
+  if (!product) return null;
+  const soldOut = product.soldOutSizes ?? [];
+  return product.sizes?.find((s) => !soldOut.includes(s)) ?? null;
+}
+
 function ProductDetailScreen() {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -50,7 +45,7 @@ function ProductDetailScreen() {
   const product = productIndex[productId];
 
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] ?? null);
+  const [selectedSize, setSelectedSize] = useState(firstAvailableSize(product));
   const [selectedColor, setSelectedColor] = useState(product?.colors?.[0] ?? null);
   const [addedToBag, setAddedToBag] = useState(false);
   const [sizeError, setSizeError] = useState(false);
@@ -59,6 +54,7 @@ function ProductDetailScreen() {
   const [zoomActive, setZoomActive] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const imageWrapRef = useRef(null);
+  const addToBagBtnRef = useRef(null);
 
   // Sizing assistant state
   const [sizeAssistantOpen, setSizeAssistantOpen] = useState(false);
@@ -67,7 +63,7 @@ function ProductDetailScreen() {
   useEffect(() => {
     if (productId) trackView(productId);
     setActiveImageIdx(0);
-    setSelectedSize(product?.sizes?.[0] ?? null);
+    setSelectedSize(firstAvailableSize(product));
     setSelectedColor(product?.colors?.[0] ?? null);
     setAddedToBag(false);
     setSizeError(false);
@@ -132,6 +128,7 @@ function ProductDetailScreen() {
       setTimeout(() => setSizeError(false), 2000);
       return;
     }
+    triggerFlyToCart(addToBagBtnRef.current);
     addItem(product, selectedSize, selectedColor?.name ?? "");
     showToast(`${product.title} (${selectedSize}) added to your bag.`, "success");
     setAddedToBag(true);
@@ -215,7 +212,7 @@ function ProductDetailScreen() {
                   aria-hidden="true"
                   style={{
                     backgroundImage: `url(${product.images[activeImageIdx]})`,
-                    backgroundSize: "250% 250%",
+                    backgroundSize: "220% 220%",
                     backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`,
                   }}
                 />
@@ -316,25 +313,36 @@ function ProductDetailScreen() {
                 </button>
               </div>
               <div className={styles.sizeGrid}>
-                {product.sizes.map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeBtnActive : ""}`}
-                    onClick={() => {
-                      setSelectedSize(size);
-                      setSizeError(false);
-                    }}
-                  >
-                    {size}
-                  </button>
-                ))}
+                {product.sizes.map((size) => {
+                  const soldOut = (product.soldOutSizes ?? []).includes(size);
+                  return (
+                    <button
+                      key={size}
+                      type="button"
+                      disabled={soldOut}
+                      className={[
+                        styles.sizeBtn,
+                        selectedSize === size ? styles.sizeBtnActive : "",
+                        soldOut ? styles.sizeBtnSoldOut : "",
+                      ].filter(Boolean).join(" ")}
+                      onClick={() => {
+                        if (soldOut) return;
+                        setSelectedSize(size);
+                        setSizeError(false);
+                      }}
+                      title={soldOut ? "Sold out" : undefined}
+                    >
+                      {size}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* CTA buttons */}
             <div className={styles.ctaGroup}>
               <button
+                ref={addToBagBtnRef}
                 type="button"
                 className={`${styles.addToBagBtn} ${addedToBag ? styles.addedToBagBtn : ""}`}
                 onClick={handleAddToBag}

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
@@ -6,19 +6,7 @@ import { useWishlist } from "../hooks/useWishlist";
 import { useUI } from "../hooks/useUI";
 import styles from "../styles/HomeScreen.module.css";
 import { products } from "../utils/data";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "#" },
-  { label: "Outerwear", href: "#" },
-  { label: "Knitwear", href: "#" },
-  { label: "Trousers", href: "#" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "#" },
-  { label: "Inner Cashmere Knitwear", href: "#" },
-  { label: "Structured Blazers", href: "#" },
-];
+import { NAV_ITEMS, FOOTER_LINKS } from "../utils/constants";
 
 const CATEGORIES = [
   { id: "outerwear", label: "Outerwear", icon: "fa-solid fa-shirt" },
@@ -31,6 +19,7 @@ function HomeScreen() {
   const navigate = useNavigate();
   const { isWishlisted, toggleItem, itemCount: wishlistCount } = useWishlist();
   const { showToast, openWishlist, openCart } = useUI();
+  const [pulsingId, setPulsingId] = useState(null);
 
   const featuredProducts = useMemo(
     () => products.filter((p) => p.featured).slice(0, 3),
@@ -47,6 +36,8 @@ function HomeScreen() {
         : `${product.title} added to your wishlist.`,
       "success"
     );
+    setPulsingId(product.id);
+    setTimeout(() => setPulsingId(null), 350);
   };
 
   return (
@@ -94,7 +85,7 @@ function HomeScreen() {
         <div className={styles.categoryStripInner}>
           <div className={styles.categoryGrid}>
             {CATEGORIES.map((cat) => (
-              <div key={cat.id} className={styles.categoryItem} onClick={() => navigate(`/products?category=${encodeURIComponent(cat.label)}`)} role="button" tabIndex={0}>
+              <div key={cat.id} className={styles.categoryItem} onClick={() => navigate(`/products?category=${encodeURIComponent(cat.label)}`)} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && navigate(`/products?category=${encodeURIComponent(cat.label)}`)} role="button" tabIndex={0}>
                 <div className={styles.categoryIconCircle}>
                   <i className={`${cat.icon} ${styles.categoryItemIcon}`} aria-hidden="true" />
                 </div>
@@ -128,12 +119,14 @@ function HomeScreen() {
                   src={product.images?.[0]}
                   alt={product.title}
                   className={styles.productImagePrimary}
+                  loading="lazy"
                 />
                 <img
                   src={product.images?.[1] ?? product.images?.[0]}
                   alt=""
                   aria-hidden="true"
                   className={styles.productImageSecondary}
+                  loading="lazy"
                 />
                 <button
                   type="button"
@@ -146,11 +139,10 @@ function HomeScreen() {
                   }
                 >
                   <i
-                    className={
-                      isWishlisted(product.id)
-                        ? "fa-solid fa-heart"
-                        : "fa-regular fa-heart"
-                    }
+                    className={[
+                      isWishlisted(product.id) ? "fa-solid fa-heart" : "fa-regular fa-heart",
+                      pulsingId === product.id ? styles.heartPulse : "",
+                    ].filter(Boolean).join(" ")}
                   />
                 </button>
               </div>
@@ -183,7 +175,7 @@ function HomeScreen() {
               load for simple styling versatility. Standardized pattern cutting
               eliminates fiber waste by up to 25%.
             </p>
-            <a href="#" className={styles.narrativeLink}>
+            <a href="/products" className={styles.narrativeLink} onClick={(e) => { e.preventDefault(); navigate("/products"); }}>
               READ OUR SOURCING BLUEPRINT
             </a>
           </div>

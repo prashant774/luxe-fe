@@ -8,19 +8,7 @@ import { useWishlist } from "../hooks/useWishlist";
 import { useUI } from "../hooks/useUI";
 import styles from "../styles/ProductListingScreen.module.css";
 import { products } from "../utils/data";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "#" },
-  { label: "Outerwear", href: "#" },
-  { label: "Knitwear", href: "#" },
-  { label: "Trousers", href: "#" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "#" },
-  { label: "Inner Cashmere Knitwear", href: "#" },
-  { label: "Structured Blazers", href: "#" },
-];
+import { NAV_ITEMS, FOOTER_LINKS } from "../utils/constants";
 
 const ALL_CATEGORIES = [...new Set(products.map((p) => p.category))].sort();
 const ALL_SIZES = ["XS", "S", "M", "L", "XL", "28", "30", "32", "34", "36"];
@@ -37,6 +25,7 @@ const PRICE_RANGES = [
 ];
 
 const SORT_OPTIONS = [
+  { value: "featured",   label: "Featured Collection" },
   { value: "newest",     label: "Newest First"        },
   { value: "price-asc",  label: "Price: Low to High"  },
   { value: "price-desc", label: "Price: High to Low"  },
@@ -336,6 +325,9 @@ function ProductListingScreen() {
     }
 
     switch (sortBy) {
+      case "featured":
+        result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        break;
       case "price-asc":
         result.sort((a, b) => a.price - b.price);
         break;
@@ -553,12 +545,14 @@ function ProductListingScreen() {
                           src={product.images?.[0]}
                           alt={product.title}
                           className={styles.productImagePrimary}
+                  loading="lazy"
                         />
                         <img
                           src={product.images?.[1] ?? product.images?.[0]}
                           alt=""
                           aria-hidden="true"
                           className={styles.productImageSecondary}
+                  loading="lazy"
                         />
                         <button
                           type="button"

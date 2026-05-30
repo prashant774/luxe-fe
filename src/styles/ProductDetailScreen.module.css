@@ -2,7 +2,7 @@
 .page {
   min-height: 100vh;
   background: #fdfdfd;
-  color: #111111;
+  color: var(--color-text);
   padding-bottom: 8rem; /* space for mobile quick-add + bottom nav */
 }
 
@@ -19,12 +19,12 @@
   gap: 0.5rem;
   font-size: 0.75rem;
   font-weight: 300;
-  color: #666666;
+  color: var(--color-muted);
   flex-wrap: wrap;
 }
 
 .breadcrumbLink {
-  color: #666666;
+  color: var(--color-muted);
   text-decoration: none;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .breadcrumbCurrent {
-  color: #111111;
+  color: var(--color-text);
   font-weight: 400;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .thumbActive {
-  border-color: #0066cc;
+  border-color: var(--color-cobalt);
 }
 
 .thumbImg {
@@ -125,7 +125,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
 }
@@ -139,7 +139,7 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--color-surface);
   border: none;
   display: flex;
   align-items: center;
@@ -155,11 +155,11 @@
 
 .pdpWishlistBtn i {
   font-size: 1rem;
-  color: #111111;
+  color: var(--color-text);
 }
 
 .pdpWishlistBtnActive i {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 /* Badge overlays */
@@ -167,8 +167,8 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  color: var(--color-surface);
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -178,7 +178,7 @@
 }
 
 .mainBadgeNew {
-  background: #0066cc;
+  background: var(--color-cobalt);
 }
 
 /* ===== INFO PANE ===== */
@@ -193,14 +193,14 @@
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #666666;
+  color: var(--color-muted);
 }
 
 .productTitle {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 2rem;
   font-weight: 400;
-  color: #111111;
+  color: var(--color-text);
   line-height: 1.15;
   margin: 0;
 }
@@ -221,7 +221,7 @@
 
 .ratingText {
   font-size: 0.75rem;
-  color: #666666;
+  color: var(--color-muted);
   font-weight: 300;
 }
 
@@ -236,7 +236,7 @@
 .price {
   font-size: 1.625rem;
   font-weight: 600;
-  color: #111111;
+  color: var(--color-text);
 }
 
 .originalPrice {
@@ -249,7 +249,7 @@
 .discountBadge {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #0066cc;
+  color: var(--color-cobalt);
   background: rgba(0, 102, 204, 0.08);
   padding: 0.125rem 0.5rem;
   border-radius: 0.125rem;
@@ -257,7 +257,7 @@
 
 .description {
   font-size: 0.875rem;
-  color: #666666;
+  color: var(--color-muted);
   font-weight: 300;
   line-height: 1.65;
   margin: 0;
@@ -275,17 +275,17 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #111111;
+  color: var(--color-text);
 }
 
 .selectorValue {
   font-weight: 400;
   text-transform: none;
-  color: #666666;
+  color: var(--color-muted);
 }
 
 .selectorLabelError {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 /* Colour swatches */
@@ -312,7 +312,7 @@
 }
 
 .colorSwatchActive {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3.5px #111111;
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 3.5px var(--color-text);
 }
 
 /* Size guide link */
@@ -326,7 +326,7 @@
 .sizeGuideLink {
   border: none;
   background: transparent;
-  color: #0066cc;
+  color: var(--color-cobalt);
   font-family: "Inter", sans-serif;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -344,7 +344,7 @@
 
 /* Alt related section (white bg when follows grey one) */
 .relatedSectionAlt {
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 /* Heart pulse animation */
@@ -365,23 +365,43 @@
   font-family: inherit;
   font-size: 0.75rem;
   font-weight: 500;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border);
   border-radius: 0.25rem;
-  background: #ffffff;
-  color: #111111;
+  background: var(--color-surface);
+  color: var(--color-text);
   cursor: pointer;
   text-align: center;
   transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
 }
 
 .sizeBtn:hover {
-  border-color: #111111;
+  border-color: var(--color-text);
 }
 
 .sizeBtnActive {
-  background: #111111;
-  border-color: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-surface);
+}
+
+.sizeBtnSoldOut {
+  color: #cccccc;
+  border-color: var(--color-border);
+  background: #fafafa;
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+}
+
+.sizeBtnSoldOut::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #cccccc;
+  transform: rotate(-15deg);
 }
 
 /* ===== CTA GROUP ===== */
@@ -398,8 +418,8 @@
   gap: 0.75rem;
   width: 100%;
   padding: 1rem;
-  background: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: inherit;
   font-size: 0.75rem;
   font-weight: 700;
@@ -416,7 +436,7 @@
 }
 
 .addedToBagBtn {
-  background: #16a34a;
+  background: var(--color-success);
 }
 
 .addedToBagBtn:hover {
@@ -431,13 +451,13 @@
   width: 100%;
   padding: 1rem;
   background: transparent;
-  color: #111111;
+  color: var(--color-text);
   font-family: inherit;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid #111111;
+  border: 1px solid var(--color-text);
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background 180ms ease;
@@ -448,19 +468,19 @@
 }
 
 .wishlistCtaActive i {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 /* ===== ACCORDIONS ===== */
 .accordions {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
 }
 
 .accordionItem {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .accordionSummary {
@@ -472,7 +492,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #111111;
+  color: var(--color-text);
   cursor: pointer;
   list-style: none;
   outline: none;
@@ -486,7 +506,7 @@
 .accordionIcon {
   font-size: 0.6875rem;
   transition: transform 200ms ease;
-  color: #666666;
+  color: var(--color-muted);
 }
 
 .accordionItem[open] .accordionIcon {
@@ -502,7 +522,7 @@
 
 .accordionBody p {
   font-size: 0.8125rem;
-  color: #666666;
+  color: var(--color-muted);
   font-weight: 300;
   line-height: 1.65;
   margin: 0;
@@ -517,13 +537,13 @@
 
 .returnLine {
   font-size: 0.8125rem;
-  color: #666666;
+  color: var(--color-muted);
 }
 
 /* ===== RELATED PRODUCTS ===== */
 .relatedSection {
-  background: #faf8f5;
-  border-top: 1px solid #e5e5e5;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
   padding: 3rem 0;
 }
 
@@ -539,14 +559,14 @@
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #666666;
+  color: var(--color-muted);
 }
 
 .relatedTitle {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 1.75rem;
   font-weight: 400;
-  color: #111111;
+  color: var(--color-text);
   margin: 0.25rem 0 2rem;
   line-height: 1.2;
 }
@@ -609,7 +629,7 @@
 .relatedProductTitle {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--color-text);
   margin: 0;
   line-height: 1.25;
 }
@@ -620,14 +640,14 @@
 
 .relatedProductCategory {
   font-size: 0.6875rem;
-  color: #666666;
+  color: var(--color-muted);
   margin: 0.25rem 0 0;
 }
 
 .relatedProductPrice {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--color-text);
   white-space: nowrap;
 }
 
@@ -652,21 +672,21 @@
   font-family: "Playfair Display", Georgia, serif;
   font-size: 1.75rem;
   font-weight: 400;
-  color: #111111;
+  color: var(--color-text);
   margin: 0;
 }
 
 .notFoundDesc {
   font-size: 0.875rem;
-  color: #666666;
+  color: var(--color-muted);
   font-weight: 300;
   margin: 0;
 }
 
 .notFoundBtn {
   margin-top: 0.5rem;
-  background: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: inherit;
   font-size: 0.75rem;
   font-weight: 600;
@@ -693,7 +713,7 @@
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border);
   padding: 0.875rem 1rem;
   align-items: center;
   justify-content: space-between;
@@ -709,7 +729,7 @@
 .mobileQuickAddTitle {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #111111;
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -718,15 +738,15 @@
 
 .mobileQuickAddSub {
   font-size: 0.6875rem;
-  color: #666666;
+  color: var(--color-muted);
   font-weight: 300;
   margin: 0.125rem 0 0;
 }
 
 .mobileQuickAddBtn {
   flex-shrink: 0;
-  background: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: inherit;
   font-size: 0.625rem;
   font-weight: 700;
@@ -753,7 +773,7 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border);
   padding: 0.75rem 0;
   justify-content: space-around;
 }
@@ -765,7 +785,7 @@
   gap: 0.25rem;
   border: none;
   background: transparent;
-  color: #666666;
+  color: var(--color-muted);
   cursor: pointer;
   padding: 0 0.5rem;
   font-family: inherit;
@@ -793,7 +813,7 @@
   width: 0.375rem;
   height: 0.375rem;
   border-radius: 50%;
-  background: #0066cc;
+  background: var(--color-cobalt);
 }
 
 /* ===== RESPONSIVE ===== */

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -6,31 +7,20 @@ import { useCart } from "../hooks/useCart";
 import { useUI } from "../hooks/useUI";
 import { productIndex } from "../utils/data";
 import styles from "../styles/WishlistScreen.module.css";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "/products" },
-  { label: "Outerwear", href: "/products" },
-  { label: "Knitwear", href: "/products" },
-  { label: "Trousers", href: "/products" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "#" },
-  { label: "Inner Cashmere Knitwear", href: "#" },
-  { label: "Structured Blazers", href: "#" },
-];
+import { NAV_ITEMS, FOOTER_LINKS } from "../utils/constants";
 
 function WishlistScreen() {
   const navigate = useNavigate();
   const { ids, removeItem } = useWishlist();
   const { addItem } = useCart();
   const { showToast } = useUI();
+  const [pulsingId, setPulsingId] = useState(null);
 
   const wishlistProducts = ids.map((id) => productIndex[id]).filter(Boolean);
 
   const handleMoveToBag = (product) => {
-    const size = product.sizes?.[0] ?? "One Size";
-    const color = product.colors?.[0] ?? "";
+    const size = product.sizes?.[1] ?? product.sizes?.[0] ?? "One Size";
+    const color = product.colors?.[0]?.name ?? "";
     addItem(product, size, color);
     removeItem(product.id);
     showToast(`${product.title} moved to your bag.`, "success");
@@ -38,8 +28,12 @@ function WishlistScreen() {
   };
 
   const handleRemove = (product) => {
-    removeItem(product.id);
-    showToast(`${product.title} removed from wishlist.`, "info");
+    setPulsingId(product.id);
+    setTimeout(() => {
+      removeItem(product.id);
+      showToast(`${product.title} removed from wishlist.`, "info");
+      setPulsingId(null);
+    }, 350);
   };
 
   return (
@@ -108,7 +102,7 @@ function WishlistScreen() {
                     onClick={(e) => { e.stopPropagation(); handleRemove(product); }}
                     aria-label={`Remove ${product.title} from wishlist`}
                   >
-                    <i className="fa-solid fa-heart" aria-hidden="true" />
+                    <i className={`fa-solid fa-heart${pulsingId === product.id ? ` ${styles.heartPulse}` : ""}`} aria-hidden="true" />
                   </button>
                 </div>
                 <div className={styles.cardFooter}>
@@ -123,7 +117,7 @@ function WishlistScreen() {
                   className={styles.moveBtn}
                   onClick={() => handleMoveToBag(product)}
                 >
-                  MOVE TO BAG ({product.sizes?.[0] ?? "One Size"})
+                  MOVE TO BAG ({product.sizes?.[1] ?? product.sizes?.[0] ?? "One Size"})
                 </button>
               </article>
             ))}

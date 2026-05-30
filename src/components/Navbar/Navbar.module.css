@@ -4,7 +4,7 @@
   z-index: 50;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border);
 }
 .inner {
   max-width: 1280px;
@@ -22,16 +22,16 @@
   gap: 2rem;
 }
 .brand {
-  color: #111111;
+  color: var(--color-text);
   text-decoration: none;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .dot {
-  color: #0066cc;
+  color: var(--color-cobalt);
 }
 .desktopNav {
   display: none;
@@ -39,20 +39,20 @@
   gap: 1.2rem;
 }
 .navLink {
-  color: #666666;
+  color: var(--color-muted);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.03em;
 }
 .navLink:hover {
-  color: #111111;
+  color: var(--color-text);
 }
 .actions {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  color: #111111;
+  gap: 0.75rem;
+  color: var(--color-text);
 }
 .iconButton {
   position: relative;
@@ -67,7 +67,7 @@
   cursor: pointer;
 }
 .iconButton:hover {
-  color: #0066cc;
+  color: var(--color-cobalt);
 }
 .bagCount {
   position: absolute;
@@ -79,8 +79,8 @@
   width: 1rem;
   height: 1rem;
   border-radius: 999px;
-  background: #111111;
-  color: #ffffff;
+  background: var(--color-text);
+  color: var(--color-surface);
   font-size: 0.65rem;
   font-weight: 700;
 }
@@ -92,7 +92,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0066cc;
+  background: var(--color-cobalt);
 }
 @media (min-width: 768px) {
   .desktopNav {

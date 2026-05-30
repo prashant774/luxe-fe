@@ -29,17 +29,17 @@ function Footer({ title = "LUXE", links = [] }) {
           <h4 className={styles.heading}>Client Assistance</h4>
           <ul className={styles.list}>
             <li>
-              <a className={styles.link} href="#">
+              <a className={styles.link} href="/products">
                 Sizing Dynamics
               </a>
             </li>
             <li>
-              <a className={styles.link} href="#">
+              <a className={styles.link} href="/products">
                 Courier Delivery Matrix
               </a>
             </li>
             <li>
-              <a className={styles.link} href="#">
+              <a className={styles.link} href="/products">
                 Carbon Neutral Initiatives
               </a>
             </li>
@@ -57,8 +57,9 @@ function Footer({ title = "LUXE", links = [] }) {
               type="email"
               placeholder="Your email address"
               className={styles.input}
+              aria-label="Email address for newsletter"
             />
-            <button type="button" className={styles.subscribeButton}>
+            <button type="button" className={styles.subscribeButton} aria-label="Subscribe to newsletter">
               OK
             </button>
           </div>

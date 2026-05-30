@@ -5,21 +5,7 @@ import { useCart } from "../hooks/useCart";
 import { useUI } from "../hooks/useUI";
 import { useWishlist } from "../hooks/useWishlist";
 import styles from "../styles/CartScreen.module.css";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "/products" },
-  { label: "Outerwear", href: "/products" },
-  { label: "Knitwear", href: "/products" },
-  { label: "Trousers", href: "/products" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "#" },
-  { label: "Inner Cashmere Knitwear", href: "#" },
-  { label: "Structured Blazers", href: "#" },
-];
-
-const FREE_SHIPPING_THRESHOLD = 500;
+import { NAV_ITEMS, FOOTER_LINKS, FREE_SHIPPING_THRESHOLD } from "../utils/constants";
 
 function CartScreen() {
   const navigate = useNavigate();

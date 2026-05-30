@@ -2,14 +2,14 @@
   border-radius: 1.25rem;
   border: 1px solid #ece9e5;
   overflow: hidden;
-  background: #fff;
+  background: var(--color-surface);
   box-shadow: 0 18px 42px rgba(17, 17, 17, 0.08);
 }
 .media {
   height: 12rem;
-  background: linear-gradient(90deg, #efeae5 25%, #f7f5f1 50%, #efeae5 75%);
+  background: linear-gradient(90deg, #F3F3F3 25%, #E5E5E5 50%, #F3F3F3 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite linear;
+  animation: shimmer 1.5s infinite linear;
 }
 .content {
   display: grid;
@@ -21,9 +21,9 @@
 .lineMedium {
   height: 0.75rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, #efeae5 25%, #f7f5f1 50%, #efeae5 75%);
+  background: linear-gradient(90deg, #F3F3F3 25%, #E5E5E5 50%, #F3F3F3 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite linear;
+  animation: shimmer 1.5s infinite linear;
 }
 .lineShort {
   width: 35%;

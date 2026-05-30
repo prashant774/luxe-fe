@@ -25,7 +25,7 @@ export function CartProvider({ children }) {
   }, [items]);
 
   const itemCount = items.reduce((sum, i) => sum + i.qty, 0);
-  const subtotal = items.reduce((sum, i) => sum + i.product.price * i.qty, 0);
+  const subtotal = items.reduce((sum, i) => sum + (i.product.price ?? 0) * i.qty, 0);
 
   function addItem(product, size, color) {
     setItems((prev) => {

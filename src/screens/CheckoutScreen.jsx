@@ -6,19 +6,7 @@ import { useCart } from "../hooks/useCart";
 import { useUI } from "../hooks/useUI";
 import { useWishlist } from "../hooks/useWishlist";
 import styles from "../styles/CheckoutScreen.module.css";
-
-const NAV_ITEMS = [
-  { label: "Shop All", href: "/products" },
-  { label: "Outerwear", href: "/products" },
-  { label: "Knitwear", href: "/products" },
-  { label: "Trousers", href: "/products" },
-];
-
-const FOOTER_LINKS = [
-  { label: "Gabardine Outerwear", href: "/products" },
-  { label: "Inner Cashmere Knitwear", href: "/products" },
-  { label: "Structured Blazers", href: "/products" },
-];
+import { NAV_ITEMS, FOOTER_LINKS } from "../utils/constants";
 
 function generateRef() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ";
@@ -49,7 +37,17 @@ function CheckoutScreen() {
   });
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    let formatted = value;
+    if (name === "cardNumber") {
+      formatted = value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+    } else if (name === "expiry") {
+      const digits = value.replace(/\D/g, "").slice(0, 4);
+      formatted = digits.length > 2 ? `${digits.slice(0, 2)} / ${digits.slice(2)}` : digits;
+    } else if (name === "cvv") {
+      formatted = value.replace(/\D/g, "").slice(0, 4);
+    }
+    setForm((prev) => ({ ...prev, [name]: formatted }));
   };
 
   const handleSubmit = (e) => {
